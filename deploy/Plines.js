@@ -24,6 +24,14 @@ module.exports = async (hre) => {
     'setDefaultUri',
     'ipfs://QmWoiAkMaLk79SmAvcUMDNUsopQFUN8EhEfrScBLSSZnf3/back.json'
   );
+
+  await execute(
+    'Plines',
+    { from: deployer, log: true },
+    'mintMultiple',
+    deployer,
+    50
+  );
 };
 
 module.exports.tags = ["Plines"];
