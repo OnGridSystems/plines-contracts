@@ -1,16 +1,16 @@
 const {ethers} = require("hardhat");
 module.exports = async (hre) => {
   const { ethers, deployments, getNamedAccounts } = hre;
-  const { deploy } = deployments;
+  const { deploy, execute } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
   const price = ethers.utils.parseEther("0.05");
   const maxAmountPerPurchase = 20;
-  const vault = "0x31372a2B98CC394178A1b041BB67ED9671361208";
+  const vault = deployer
   const presaleDAppURI = "https://presale.plines.io";
 
-  const { abi, address: addressPlines } = await deployments.get("Plines");
+  const plines = await deployments.get("Plines");
 
   await deploy("PlinesPresale", {
     from: deployer,
@@ -19,16 +19,20 @@ module.exports = async (hre) => {
       price,
       maxAmountPerPurchase,
       vault,
-      addressPlines,
+      plines.address,
       presaleDAppURI
     ],
   });
 
-  const { address: addressPlinesPresale } = await deployments.get("PlinesPresale");
-  const plinesContract = await ethers.getContractAt(abi, addressPlines);
-  await plinesContract.grantRole(
-      ethers.utils.keccak256(ethers.utils.toUtf8Bytes("MINTER_ROLE")),
-      addressPlinesPresale
+  const plinesPresale = await deployments.get("PlinesPresale");
+  const MINTER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("MINTER_ROLE"));
+
+  await execute(
+    'Plines',
+    { from: deployer, log: true },
+    'grantRole',
+    MINTER_ROLE,
+    plinesPresale.address
   );
 };
 

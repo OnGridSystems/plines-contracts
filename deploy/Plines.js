@@ -1,6 +1,6 @@
 module.exports = async (hre) => {
   const { ethers, deployments, getNamedAccounts } = hre;
-  const { deploy } = deployments;
+  const { deploy, execute } = deployments;
 
   const { deployer } = await getNamedAccounts();
 
@@ -17,6 +17,13 @@ module.exports = async (hre) => {
     },
     log: true,
   });
+
+  await execute(
+    'Plines',
+    { from: deployer, log: true },
+    'setDefaultUri',
+    'ipfs://QmWoiAkMaLk79SmAvcUMDNUsopQFUN8EhEfrScBLSSZnf3/back.json'
+  );
 };
 
 module.exports.tags = ["Plines"];
