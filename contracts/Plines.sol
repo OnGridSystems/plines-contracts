@@ -24,7 +24,7 @@ contract Plines is ERC721Upgradeable, ERC721EnumerableUpgradeable, AccessControl
     // Max NFTs that can be bought at once. To avoid gas overspending.
 
     function initialize() public virtual initializer {
-        __ERC721_init("Plines", "");
+        __ERC721_init("Plines", "PLN");
         __ERC721Enumerable_init();
         __AccessControl_init();
 

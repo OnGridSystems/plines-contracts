@@ -8,7 +8,7 @@ const PlinesMock = artifacts.require("PlinesMock");
 
 contract("Plines ERC721", function (accounts) {
   const name = "Plines";
-  const symbol = "";
+  const symbol = "PLN";
 
   beforeEach(async function () {
     this.token = await PlinesMock.new();
