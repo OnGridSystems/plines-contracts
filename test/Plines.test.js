@@ -16,8 +16,8 @@ describe("Plines", function () {
     this.plines = await upgrades.deployProxy(this.PlinesArtifact);
   });
 
-  it("setDefaultUri reverts if called by wrong role", async function () {
-    await expect(this.plines.connect(this.provider).setDefaultUri("ipfs://ipfs/defaultUri")).to.be.reverted;
+  it("setBaseUri reverts if called by wrong role", async function () {
+    await expect(this.plines.connect(this.provider).setBaseUri("ipfs://ipfs/baseUri")).to.be.reverted;
   });
 
   it("mint reverts if called by wrong role", async function () {
@@ -73,7 +73,7 @@ describe("Plines", function () {
 
       describe("set default uri", function () {
         beforeEach(async function () {
-          await this.plines.setDefaultUri("URI");
+          await this.plines.setBaseUri("URI");
         });
 
         it("zero token has tokenURI 'URI/0.json' after its mint", async function () {
@@ -101,10 +101,10 @@ describe("Plines", function () {
       await this.plines.grantRole(await this.plines.DEFAULT_ADMIN_ROLE(), this.grantedAdmin.address);
     });
 
-    it("setDefaultUri succeeds and fails after revocation", async function () {
-      await this.plines.connect(this.grantedAdmin).setDefaultUri("ipfs://ipfs/newURI");
+    it("setBaseUri succeeds and fails after revocation", async function () {
+      await this.plines.connect(this.grantedAdmin).setBaseUri("ipfs://ipfs/newURI");
       await this.plines.revokeRole(await this.plines.DEFAULT_ADMIN_ROLE(), this.grantedAdmin.address);
-      await expect(this.plines.connect(this.grantedAdmin).setDefaultUri("ipfs://ipfs/newestURI")).to.be.reverted;
+      await expect(this.plines.connect(this.grantedAdmin).setBaseUri("ipfs://ipfs/newestURI")).to.be.reverted;
     });
   });
 });

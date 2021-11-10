@@ -21,7 +21,7 @@ module.exports = async (hre) => {
   await execute(
     'Plines',
     { from: deployer, log: true },
-    'setDefaultUri',
+    'setBaseUri',
     'ipfs://QmWoiAkMaLk79SmAvcUMDNUsopQFUN8EhEfrScBLSSZnf3/back.json'
   );
 

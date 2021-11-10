@@ -15,12 +15,10 @@ contract Plines is ERC721Upgradeable, ERC721EnumerableUpgradeable, AccessControl
 
     // Maximum allowed tokenSupply boundary.
     uint256 public maxTotalSupply;
-    // If tokenId doesn't match any configured batch, defaultURI parameters are used.
-    string public defaultUri;
-    // Roles that can modify individual characteristics
+    // Address of IPFS DAG that contains numbered token JSON files
+    string public baseUri;
+    // Role that can issue new tokens
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-
-    // Max NFTs that can be bought at once. To avoid gas overspending.
 
     function initialize() public virtual initializer {
         __ERC721_init("Plines", "PLN");
@@ -63,12 +61,11 @@ contract Plines is ERC721Upgradeable, ERC721EnumerableUpgradeable, AccessControl
     /**
      * @dev IPFS address that stores JSON with token attributes
      * @param tokenId id of the token
-     * @return string with ipfs address to json with token attribute
-     * or URI for default token if token doesn`t exist
+     * @return address of json file `ipfs://<baseUri>/<tokenId>.json`
      */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "URI query for nonexistent token");
-        return string(abi.encodePacked(defaultUri, "/", tokenId.toString(), ".json"));
+        return string(abi.encodePacked(baseUri, "/", tokenId.toString(), ".json"));
     }
 
     /**
@@ -129,9 +126,10 @@ contract Plines is ERC721Upgradeable, ERC721EnumerableUpgradeable, AccessControl
     }
 
     /**
-     * @dev Set defaultUri
+     * @dev Set baseUri of token JSON files
+     * @param uri new URI (ipfs://DAG)
      */
-    function setDefaultUri(string memory uri) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        defaultUri = uri;
+    function setBaseUri(string memory uri) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        baseUri = uri;
     }
 }
