@@ -4,7 +4,7 @@
 
 import "./Plines.sol";
 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.10;
 
 contract PlinesPresale {
     string public presaleDAppURI;
