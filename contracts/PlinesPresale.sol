@@ -13,7 +13,7 @@ contract PlinesPresale {
     address payable public vault;
     Plines public token;
 
-    event Buy(address indexed from, uint256 amount);
+    event Buy(address indexed from, uint256 amount, uint256 value);
 
     constructor(
         uint256 _price,
@@ -43,6 +43,6 @@ contract PlinesPresale {
 
         token.mintMultiple(msg.sender, _amount);
         vault.transfer(msg.value);
-        emit Buy(msg.sender, _amount);
+        emit Buy(msg.sender, _amount, msg.value);
     }
 }

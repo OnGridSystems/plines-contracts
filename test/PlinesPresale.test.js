@@ -57,7 +57,7 @@ describe("PlinesPresale", function () {
       buy = await this.plinesPresale.buy(amount, presaleDAppURI, {value: price.mul(amount)});
     });
     it("emits event Buy", async function () {
-      expect(buy).to.emit(this.plinesPresale, "Buy").withArgs(this.deployer.address, amount);
+      expect(buy).to.emit(this.plinesPresale, "Buy").withArgs(this.deployer.address, amount, price.mul(amount));
     });
     it("user's balance has decreased", async function () {
       expect(deployerBalance).be.above(await ethers.provider.getBalance(this.deployer.address));
