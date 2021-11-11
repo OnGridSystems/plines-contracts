@@ -39,6 +39,14 @@ module.exports = {
       tags: ["staging"],
       gasPrice: 8000000000,
     },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts,
+      chainId: 1,
+      live: true,
+      saveDeployments: true,
+      gasPrice: 145000000000,
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

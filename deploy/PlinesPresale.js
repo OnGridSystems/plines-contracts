@@ -7,7 +7,7 @@ module.exports = async (hre) => {
 
   const price = ethers.utils.parseEther("0.05");
   const maxAmountPerPurchase = 20;
-  const vault = deployer
+  const vault = '0x31372a2B98CC394178A1b041BB67ED9671361208'
   const presaleDAppURI = "https://presale.plines.io";
 
   const plines = await deployments.get("Plines");
